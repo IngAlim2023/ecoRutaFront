@@ -1,17 +1,72 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
-import './App.css'
-import Home from './pages/home/Home'
+import { Routes, Route } from "react-router-dom";
+import Navbar from "./components/Navbar";
+import Home from "./pages/Home";
+import Login from "./pages/Login";
+import Register from "./pages/Register";
+import Rutas from "./pages/Rutas";
+import Recorridos from "./pages/Recorridos";
+import Perfil from "./pages/Perfil";
+import Logros from "./pages/Logros";
+import Ranking from "./pages/Ranking";
+import ProtectedRoute from "./components/ProtectedRoute";
 
-function App() {
-  
-
+export default function App() {
   return (
-    <Router>
+    <>
+      <Navbar />
       <Routes>
-        <Route path='/' element={<Home/>}/>
-      </Routes>
-    </Router>
-  )
-}
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
 
-export default App
+        <Route
+          path="/"
+          element={
+            <ProtectedRoute>
+              <Home />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/rutas"
+          element={
+            <ProtectedRoute>
+              <Rutas />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/recorridos"
+          element={
+            <ProtectedRoute>
+              <Recorridos />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/perfil"
+          element={
+            <ProtectedRoute>
+              <Perfil />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/logros"
+          element={
+            <ProtectedRoute>
+              <Logros />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/ranking"
+          element={
+            <ProtectedRoute>
+              <Ranking />
+            </ProtectedRoute>
+          }
+        />
+      </Routes>
+    </>
+  );
+}
