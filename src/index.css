@@ -1,1 +1,9 @@
+/* index.css */
 @import "tailwindcss";
+@import 'mapbox-gl/dist/mapbox-gl.css';
+
+/* Añade esto para asegurar que el contenedor del mapa tenga dimensiones definidas */
+.map-container {
+  width: 100%;
+  height: 100%;
+}
