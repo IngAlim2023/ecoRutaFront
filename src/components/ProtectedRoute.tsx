@@ -1,9 +1,13 @@
-import { useEffect, useState } from "react";
-import { Outlet, Navigate } from "react-router-dom";
+import { useEffect, useState, type ReactNode } from "react";
+import { Navigate } from "react-router-dom";
 import { usuarioService } from "../services/usuariosService";
-import type { VerifyTokenResponse } from "../services/usuariosService"; 
+import type { VerifyTokenResponse } from "../services/usuariosService";
 
-export default function ProtectedRoute() {
+interface ProtectedRouteProps {
+  children: ReactNode;
+}
+
+export default function ProtectedRoute({ children }: ProtectedRouteProps) {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null);
   const token = localStorage.getItem("token");
 
@@ -16,7 +20,6 @@ export default function ProtectedRoute() {
 
       try {
         const result: VerifyTokenResponse = await usuarioService.verifyToken(token);
-        
         setIsAuthenticated(result.msg === "Autorizado");
 
         if (result.msg !== "Autorizado") {
@@ -42,5 +45,5 @@ export default function ProtectedRoute() {
     );
   }
 
-  return isAuthenticated ? <Outlet /> : <Navigate to="/login" replace />;
+  return isAuthenticated ? <>{children}</> : <Navigate to="/login" replace />;
 }
