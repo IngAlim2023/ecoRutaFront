@@ -45,7 +45,8 @@ const Navbar: React.FC = () => {
     { path: "/recorridos", label: "Recorridos" },
     { path: "/perfil", label: "Perfil" },
     { path: "/logros", label: "Logros" },
-    { path: "/ranking", label: "Ranking" }
+    { path: "/ranking", label: "Ranking" },
+    { path: "/roles", label: "Roles" }
   ];
 
   return (

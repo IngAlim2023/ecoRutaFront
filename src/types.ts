@@ -20,3 +20,7 @@ export interface ApiResponse<T> {
   data: T;
   message?: string;
 }
+export interface Role {
+  id: number;
+  nombre: string;
+}
