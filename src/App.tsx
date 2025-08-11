@@ -9,8 +9,8 @@ import Perfil from "./pages/Perfil";
 import Logros from "./pages/Logros";
 import Ranking from "./pages/Ranking";
 import ProtectedRoute from "./components/ProtectedRoute";
-import RolesPage  from "./pages/Roles";;
-
+import RolesPage from "./pages/Roles";
+import NotFound from "./pages/NotFound";
 export default function App() {
   return (
     <>
@@ -67,16 +67,16 @@ export default function App() {
             </ProtectedRoute>
           }
         />
-        <Route 
+        <Route
           path="/roles"
           element={
             <ProtectedRoute>
-              <RolesPage /> 
+              <RolesPage />
             </ProtectedRoute>
           }
         />
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </>
- 
-);
+  );
 }
