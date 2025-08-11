@@ -1,6 +1,7 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { usuarioService } from "../services/usuariosService";
+import eco from "../assets/imgs/eco.svg";
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -28,42 +29,75 @@ export default function Login() {
   };
 
   return (
-    <div className="max-w-md mx-auto p-6 bg-white rounded-lg shadow-md">
-      <h2 className="text-2xl font-bold mb-6 text-center">Iniciar Sesión</h2>
-      {error && (
-        <div className="mb-4 p-3 bg-red-100 text-red-700 rounded-md">
-          {error}
-        </div>
-      )}
-      <form onSubmit={handleSubmit} className="space-y-4">
-        <div>
-          <label className="block mb-2 font-medium">Correo electrónico</label>
-          <input
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            className="w-full p-2 border rounded-md"
-            required
+    <div className="flex justify-center items-center h-screen bg-gradient-to-br from-green-100 via-white to-green-50 p-4">
+      <div className="w-full max-w-md  bg-opacity-90 backdrop-blur-lg rounded-2xl shadow-emerald-200 p-8 ">
+        <div className=" flex flex-col justify-center items-center">
+          <img
+            src={eco}
+            alt="404 Not Found"
+            className="w-20 mb-6 animate-pulse transition-transform duration-300 hover:scale-105"
+            style={{
+              filter:
+                "invert(54%) sepia(83%) saturate(421%) hue-rotate(85deg) brightness(92%) contrast(85%)",
+            }}
           />
+          <h2 className="text-3xl font-extrabold text-green-700 mb-6 text-center">
+            Iniciar Sesión
+          </h2>
         </div>
-        <div>
-          <label className="block mb-2 font-medium">Contraseña</label>
-          <input
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            className="w-full p-2 border rounded-md"
-            required
-          />
-        </div>
-        <button
-          type="submit"
-          disabled={loading}
-          className={`w-full py-2 px-4 rounded-md text-white ${loading ? 'bg-gray-400' : 'bg-green-600 hover:bg-green-700'}`}
-        >
-          {loading ? "Cargando..." : "Iniciar sesión"}
-        </button>
-      </form>
+
+        {error && (
+          <div className="mb-4 p-3 bg-red-50 border border-red-200 text-red-700 rounded-lg text-sm">
+            {error}
+          </div>
+        )}
+
+        <form onSubmit={handleSubmit} className="space-y-5">
+          <div>
+            <input
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              className="w-full px-4 py-2 border-0 border-b-2 border-gray-400 focus:border-green-400 focus:ring-0 outline-none"
+              placeholder="Correo electonico"
+              required
+            />
+          </div>
+
+          <div>
+            <input
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              className="w-full px-4 py-2 border-0 border-b-2 border-gray-400 focus:border-green-400 focus:ring-0 outline-none"
+              placeholder="Contraseña"
+              required
+            />
+          </div>
+
+          <button
+            type="submit"
+            disabled={loading}
+            className={`w-full py-3 px-4 rounded-lg mt-4 font-semibold text-white shadow-md transition-all ${
+              loading
+                ? "bg-gray-400 cursor-not-allowed"
+                : "bg-green-600 hover:bg-green-700 active:scale-[0.98]"
+            }`}
+          >
+            {loading ? "Cargando..." : "Iniciar sesión"}
+          </button>
+        </form>
+
+        <p className="mt-6 text-center text-sm text-gray-500">
+          ¿No tienes cuenta?{" "}
+          <Link
+            to="/register"
+            className="text-green-600 font-medium hover:underline"
+          >
+            Regístrate aquí
+          </Link>
+        </p>
+      </div>
     </div>
   );
 }
