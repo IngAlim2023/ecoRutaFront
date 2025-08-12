@@ -1,6 +1,6 @@
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
-
+import eco from '../assets/imgs/eco.svg'
 const Navbar: React.FC = () => {
   const location = useLocation();
   const navigate = useNavigate();
@@ -50,8 +50,11 @@ const Navbar: React.FC = () => {
   ];
 
   return (
-    <nav className="bg-green-600 text-white p-4 flex justify-between items-center">
+    <nav className="text-green-600 p-4 flex justify-between items-center bg-green-50 backdrop-saturate-200 backdrop-blur-2xl bg-opacity-80">
+      <div className="flex justify-center items-center">
+      <img src={eco} alt="logo" className="w-6 animate-bounce"/>
       <h1 className="text-lg font-bold">EcoRuta</h1>
+      </div>
       
       <div className="flex items-center space-x-6">
         <ul className="flex space-x-6">
@@ -74,7 +77,7 @@ const Navbar: React.FC = () => {
             <span className="text-sm">Hola, {userEmail}</span>
             <button 
               onClick={handleLogout}
-              className="bg-white text-green-600 px-3 py-1 rounded hover:bg-gray-100 transition"
+              className="bg-green-500 text-white px-3 py-1 rounded hover:bg-gray-100 transition"
             >
               Cerrar sesión
             </button>

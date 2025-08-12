@@ -58,48 +58,61 @@ export default function Home() {
   };
 
   return (
-    <div className="p-6 bg-green-50 min-h-screen">
-      <h1 className="text-3xl font-bold text-green-700 mb-4">
-        Bienvenido a EcoRuta
-      </h1>
-      <p className="text-gray-700 mb-6">
-        Planifica rutas eco-amigables, registra tus recorridos y gana incentivos.
-      </p>
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center min-h-[90vh] p-8">
+      {/* Texto */}
+      <div className="flex flex-col justify-center">
+        <h1 className="text-4xl md:text-5xl font-extrabold text-green-700 mb-4">
+          Bienvenido a EcoRuta
+        </h1>
+        <p className="text-gray-700 mb-6 text-lg">
+          Planifica rutas eco-amigables, registra tus recorridos y gana
+          incentivos.
+        </p>
 
-      {error && <p className="text-red-500 mt-2">{error}</p>}
+        {routeInfo && (
+          <div className="bg-white p-4 rounded-lg shadow-md border border-green-100 mb-4">
+            <p>
+              <strong>Distancia:</strong> {routeInfo.distancia} km
+            </p>
+            <p>
+              <strong>Duración:</strong> {routeInfo.duracion} min
+            </p>
+          </div>
+        )}
 
-      {routeInfo && (
-        <div className="bg-white p-4 rounded shadow mb-4">
-          <p><strong>Distancia:</strong> {routeInfo.distancia} km</p>
-          <p><strong>Duración:</strong> {routeInfo.duracion} min</p>
-        </div>
-      )}
+        {error && (
+          <p className="text-red-500 bg-red-100 px-3 py-2 rounded-lg">
+            {error}
+          </p>
+        )}
+      </div>
 
-      <div style={{ height: "80vh" }}>
+      {/* Mapa */}
+      <div className="rounded-2xl overflow-hidden shadow-lg h-[400px] md:h-[500px]">
         <Map
           {...viewState}
           onMove={(evt) => setViewState(evt.viewState)}
           onClick={handleMapClick}
-          style={{ width: "75%", height: "50%" }}
           mapStyle="mapbox://styles/mapbox/streets-v12"
           mapboxAccessToken="pk.eyJ1Ijoic2FudGlhZ29weCIsImEiOiJjbWU0ZHpoY3IwZ3NvMm9wdXRwdHI2ajd6In0.XLsp5NQ8E_MfK7AwUPi5_Q"
         >
           <NavigationControl position="top-left" />
-
-          {/* Marcador de inicio */}
-          {start && <Marker longitude={start[0]} latitude={start[1]} color="red" />}
-
-          {/* Marcador de fin */}
+          {start && (
+            <Marker longitude={start[0]} latitude={start[1]} color="red" />
+          )}
           {end && <Marker longitude={end[0]} latitude={end[1]} color="blue" />}
 
-          {/* Línea de la ruta */}
           {route && (
-            <Source id="route" type="geojson" data={{ type: "Feature", geometry: route }}>
+            <Source
+              id="route"
+              type="geojson"
+              data={{ type: "Feature", geometry: route }}
+            >
               <Layer
                 id="route-layer"
                 type="line"
                 paint={{
-                  "line-color": "#ff0000",
+                  "line-color": "#16a34a",
                   "line-width": 4,
                 }}
               />
