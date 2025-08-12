@@ -52,7 +52,10 @@ const Navbar: React.FC = () => {
   return (
     <nav className="text-green-600 p-4 flex justify-between items-center bg-green-50 backdrop-saturate-200 backdrop-blur-2xl bg-opacity-80">
       <div className="flex justify-center items-center">
-      <img src={eco} alt="logo" className="w-6 animate-bounce"/>
+      <img src={eco} alt="logo" className="w-6 animate-bounce" style={{
+              filter:
+                "invert(54%) sepia(83%) saturate(421%) hue-rotate(85deg) brightness(92%) contrast(85%)",
+            }} />
       <h1 className="text-lg font-bold">EcoRuta</h1>
       </div>
       
