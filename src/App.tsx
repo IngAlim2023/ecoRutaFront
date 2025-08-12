@@ -12,6 +12,7 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import RolesPage from "./pages/Roles";
 import NotFound from "./pages/NotFound";
 import { Toaster } from "react-hot-toast";
+import ViewRutas from "./pages/ViewRutas";
 export default function App() {
   return (
     <>
@@ -33,6 +34,14 @@ export default function App() {
           element={
             <ProtectedRoute>
               <Rutas />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/viewRutas"
+          element={
+            <ProtectedRoute>
+              <ViewRutas />
             </ProtectedRoute>
           }
         />
