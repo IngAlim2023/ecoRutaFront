@@ -1,39 +1,47 @@
-import api from './api';
+import api from './api'
 
 export interface Role {
-  id: number;
-  nombre: string;
+  id: number
+  nombre: string
 }
 
 export const getRoles = async (): Promise<Role[]> => {
-  const response = await api.get('/roles');
-  const rolesFromApi = response.data.data || [];
-  
-  // Normalizamos la estructura por si el backend usa otros nombres
-  return rolesFromApi.map((r: any) => ({
-    id: r.id ?? r.id_rol ?? r.ID ?? 0,
-    nombre: r.nombre ?? r.Nombre ?? ''
-  }));
-};
+  try {
+    const response = await api.get('/roles')
+    return response.data.data || []
+  } catch (error) {
+    console.error('Error fetching roles:', error)
+    throw error
+  }
+}
 
 export const createRole = async (data: { nombre: string }): Promise<Role> => {
-  const response = await api.post('/roles', data);
-  const r = response.data.data;
-  return {
-    id: r.id ?? r.id_rol ?? r.ID ?? 0,
-    nombre: r.nombre ?? r.Nombre ?? ''
-  };
-};
+  try {
+    const response = await api.post('/roles', data)
+    return response.data.data
+  } catch (error) {
+    console.error('Error creating role:', error)
+    throw error
+  }
+}
 
 export const updateRole = async (id: number, data: { nombre: string }): Promise<Role> => {
-  const response = await api.put(`/roles/${id}`, data);
-  const r = response.data.data;
-  return {
-    id: r.id ?? r.id_rol ?? r.ID ?? 0,
-    nombre: r.nombre ?? r.Nombre ?? ''
-  };
-};
+  if (!id) throw new Error('ID is required for update')
+  try {
+    const response = await api.put(`/roles/${id}`, data)
+    return response.data.data
+  } catch (error) {
+    console.error('Error updating role:', error)
+    throw error
+  }
+}
 
 export const deleteRole = async (id: number): Promise<void> => {
-  await api.delete(`/roles/${id}`);
-};
+  if (!id) throw new Error('ID is required for delete')
+  try {
+    await api.delete(`/roles/${id}`)
+  } catch (error) {
+    console.error('Error deleting role:', error)
+    throw error
+  }
+}

@@ -1,23 +1,27 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react'
 
 interface RoleFormProps {
-  role?: { id: number; nombre: string };
-  onSubmit: (data: { nombre: string }) => void;
-  onCancel: () => void;
+  role?: { id: number; nombre: string }
+  onSubmit: (data: { nombre: string }) => void
+  onCancel: () => void
 }
 
 const RoleForm: React.FC<RoleFormProps> = ({ role, onSubmit, onCancel }) => {
-  const [nombre, setNombre] = useState(role?.nombre || '');
-  const [error, setError] = useState('');
+  const [nombre, setNombre] = useState(role?.nombre || '')
+  const [error, setError] = useState('')
+
+  useEffect(() => {
+    setNombre(role?.nombre || '')
+  }, [role])
 
   const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
+    e.preventDefault()
     if (!nombre.trim()) {
-      setError('El nombre es requerido');
-      return;
+      setError('El nombre es requerido')
+      return
     }
-    onSubmit({ nombre });
-  };
+    onSubmit({ nombre })
+  }
 
   return (
     <div className="bg-white p-4 rounded shadow max-w-md w-full">
@@ -34,8 +38,8 @@ const RoleForm: React.FC<RoleFormProps> = ({ role, onSubmit, onCancel }) => {
             className="w-full p-2 border rounded"
             value={nombre}
             onChange={(e) => {
-              setNombre(e.target.value);
-              setError('');
+              setNombre(e.target.value)
+              setError('')
             }}
             placeholder="Ej: Administrador"
           />
@@ -53,12 +57,12 @@ const RoleForm: React.FC<RoleFormProps> = ({ role, onSubmit, onCancel }) => {
             type="submit"
             className="px-3 py-1 bg-blue-600 text-white rounded hover:bg-blue-700"
           >
-            Guardar
+            {role ? 'Actualizar' : 'Crear'}
           </button>
         </div>
       </form>
     </div>
-  );
-};
+  )
+}
 
-export default RoleForm;
+export default RoleForm

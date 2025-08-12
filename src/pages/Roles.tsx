@@ -1,64 +1,75 @@
-import React, { useEffect, useState } from "react";
-import { getRoles, createRole, updateRole, deleteRole, type Role } from "../services/roles";
-import RoleForm from "../components/RoleForm";
+import React, { useEffect, useState } from "react"
+import { getRoles, createRole, updateRole, deleteRole, type Role } from "../services/roles"
+import RoleForm from "../components/RoleForm"
 
 const RolesPage: React.FC = () => {
-  const [roles, setRoles] = useState<Role[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState("");
-  const [selectedRole, setSelectedRole] = useState<Role | null>(null);
-  const [showForm, setShowForm] = useState(false);
+  const [roles, setRoles] = useState<Role[]>([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState("")
+  const [selectedRole, setSelectedRole] = useState<Role | null>(null)
+  const [showForm, setShowForm] = useState(false)
 
   const fetchRoles = async () => {
     try {
-      setLoading(true);
-      const data = await getRoles();
-      setRoles(Array.isArray(data) ? data : []); // Evita romper si no es array
+      setLoading(true)
+      const data = await getRoles()
+      setRoles(data)
+      setError("")
     } catch (err) {
-        console.error("Error fetching roles:", err);
-      setError("Error al cargar los roles");
+      console.error("Error fetching roles:", err)
+      setError("Error al cargar los roles")
     } finally {
-      setLoading(false);
+      setLoading(false)
     }
-  };
+  }
 
   useEffect(() => {
-    fetchRoles();
-  }, []);
+    fetchRoles()
+  }, [])
 
   const handleCreate = async (data: { nombre: string }) => {
     try {
-      await createRole(data);
-      setShowForm(false);
-      fetchRoles();
-    } catch {
-      setError("Error al crear el rol");
+      await createRole(data)
+      setShowForm(false)
+      await fetchRoles()
+    } catch (err) {
+      console.error("Error creating role:", err)
+      setError("Error al crear el rol")
     }
-  };
+  }
 
   const handleUpdate = async (data: { nombre: string }) => {
-    if (!selectedRole) return;
-    try {
-      await updateRole(selectedRole.id, data);
-      setShowForm(false);
-      setSelectedRole(null);
-      fetchRoles();
-    } catch {
-      setError("Error al actualizar el rol");
+    if (!selectedRole?.id) {
+      setError("Rol no seleccionado o ID inválido")
+      return
     }
-  };
+    try {
+      await updateRole(selectedRole.id, data)
+      setShowForm(false)
+      setSelectedRole(null)
+      await fetchRoles()
+    } catch (err) {
+      console.error("Error updating role:", err)
+      setError("Error al actualizar el rol")
+    }
+  }
 
   const handleDelete = async (id: number) => {
-    if (!window.confirm("¿Seguro que quieres eliminar este rol?")) return;
-    try {
-      await deleteRole(id);
-      fetchRoles();
-    } catch {
-      setError("Error al eliminar el rol");
+    if (!id) {
+      setError("ID inválido para eliminar")
+      return
     }
-  };
+    if (!window.confirm("¿Seguro que quieres eliminar este rol?")) return
+    try {
+      await deleteRole(id)
+      await fetchRoles()
+    } catch (err) {
+      console.error("Error deleting role:", err)
+      setError("Error al eliminar el rol")
+    }
+  }
 
-  if (loading) return <p className="p-4">Cargando...</p>;
+  if (loading) return <p className="p-4">Cargando...</p>
 
   return (
     <div className="p-6">
@@ -68,8 +79,8 @@ const RolesPage: React.FC = () => {
       {!showForm ? (
         <button
           onClick={() => {
-            setSelectedRole(null);
-            setShowForm(true);
+            setSelectedRole(null)
+            setShowForm(true)
           }}
           className="mb-4 px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700"
         >
@@ -80,8 +91,8 @@ const RolesPage: React.FC = () => {
           role={selectedRole || undefined}
           onSubmit={selectedRole ? handleUpdate : handleCreate}
           onCancel={() => {
-            setShowForm(false);
-            setSelectedRole(null);
+            setShowForm(false)
+            setSelectedRole(null)
           }}
         />
       )}
@@ -96,14 +107,14 @@ const RolesPage: React.FC = () => {
         </thead>
         <tbody>
           {roles.map((role) => (
-            <tr key={role.id}>
+            <tr key={`role-${role.id} || math.random().toString(36)}.substr(2.9)`}>
               <td className="border px-4 py-2">{role.id}</td>
               <td className="border px-4 py-2">{role.nombre}</td>
               <td className="border px-4 py-2 flex space-x-2">
                 <button
                   onClick={() => {
-                    setSelectedRole(role);
-                    setShowForm(true);
+                    setSelectedRole(role)
+                    setShowForm(true)
                   }}
                   className="px-3 py-1 bg-blue-500 text-white rounded hover:bg-blue-600"
                 >
@@ -128,7 +139,8 @@ const RolesPage: React.FC = () => {
         </tbody>
       </table>
     </div>
-  );
-};
+  )
+}
 
-export default RolesPage;
+export default RolesPage
+
