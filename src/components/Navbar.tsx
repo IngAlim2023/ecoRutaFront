@@ -80,7 +80,7 @@ const Navbar: React.FC = () => {
             <span className="text-sm">Hola, {userEmail}</span>
             <button 
               onClick={handleLogout}
-              className="bg-green-500 text-white px-3 py-1 rounded hover:bg-gray-100 transition"
+              className="bg-green-500 text-white px-3 py-1 rounded hover:bg-gray-500 transition"
             >
               Cerrar sesión
             </button>
