@@ -98,9 +98,9 @@ const Recorridos: React.FC = () => {
     const nowFecha = new Date();
     const data = {
       fecha: nowFecha.toISOString(),
-      distancia: distance,
-      tiempo_minutos: parseFloat((duration / 60).toFixed(1)),
-      co2: calCo2 === 0 ? 0.2 : calCo2,
+      distancia: parseFloat(distance?.toFixed(2)),
+      tiempo_minutos: (duration / 60).toFixed(0),
+      co2: calCo2 === 0 ? 1 : parseFloat(calCo2).toFixed(2),
       ruta_id: idRu,
       usuario_id: userId,
     };
@@ -112,7 +112,7 @@ const Recorridos: React.FC = () => {
           "Content-Type": "application/json",
         },
       });
-      toast.success("Ruta creada");
+      toast.success("Recorrido creado");
       navigate('/')
     } catch (e) {
       toast.error("Error al crear la ruta");
