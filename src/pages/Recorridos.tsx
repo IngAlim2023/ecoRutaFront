@@ -177,7 +177,7 @@ const Recorridos: React.FC = () => {
           </div>
         </aside>
         {distance !== null && duration !== null && (
-          <div className=" flex flex-col  justify-center  items-center mb-4 p-3 bg-white rounded-lg ">
+          <div className=" flex flex-col  justify-center  items-center mb-4 p-3 bg-white rounded-lg h-max-screen ">
             <div className="mb-4 p-3 bg-white rounded-lg text-green-800 font-semibold">
               <div>
                 Distancia: {(distance / 1000).toFixed(2)} km <br />
